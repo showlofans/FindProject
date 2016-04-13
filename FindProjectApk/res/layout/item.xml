@@ -1,0 +1,75 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/top_project"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/top" >
+
+        <Button
+            android:id="@+id/item_home"
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:background="@color/top"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="@string/main_function"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/sp_head_deploy"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:text="@string/project"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/bt_my_space"
+            android:layout_width="80dp"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:background="@color/top"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="我的家"
+            android:textColor="#ffffff"
+            android:textSize="17sp" />
+    </RelativeLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+        <ListView
+            android:id="@+id/lv_lv"
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"
+            android:fastScrollEnabled="true"
+            android:listSelector="@drawable/listview_bg"
+            android:background="@drawable/listview_bg"
+            android:minHeight="20dp" >
+        </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>
+<!--
+     <Spinner
+            android:id="@+id/sp_head_deploy"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:entries="@array/change_title"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+-->

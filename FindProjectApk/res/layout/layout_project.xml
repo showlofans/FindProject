@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:background="@color/top"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical" >
+
+            <Button
+                android:id="@+id/bt_add_resource"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/project_link" />
+
+            <Button
+                android:id="@+id/bt_add_link"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/edit_proj_link" />
+
+            <Button
+                android:id="@+id/bt_add_trouble"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/add_trouble" />
+
+            <Button
+                android:id="@+id/bt_add_renzhen"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/add_renzhen_info" />
+
+            <Button
+                android:id="@+id/bt_update_mind"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/update_mind" />
+
+            <Button
+                android:id="@+id/bt_add_description"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/add_decription" />
+
+            <Button
+                android:id="@+id/bt_update_theme"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/popbutton"
+                android:text="@string/update_theme" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

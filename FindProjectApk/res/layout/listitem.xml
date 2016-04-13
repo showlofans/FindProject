@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#f0f0f0" >
+
+    <TextView
+        android:id="@+id/li_nickkname"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="小强"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/deploy_time"
+        android:layout_width="match_parent"
+        android:gravity="right"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:text="@string/time"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/type_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/deploy_time"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dp"
+        android:text="@string/level_type"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/project_theme"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/type_level"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="@string/app_theme"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/proj_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/project_theme"
+        android:layout_marginTop="10dp"
+        android:maxLength="100"
+        android:text="@string/project_item" />
+
+    <TextView
+        android:id="@+id/bt_comment"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/proj_description"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:background="@drawable/popbutton"
+        android:layout_marginTop="10dp"
+        android:text="@string/comment" />
+
+    <TextView
+        android:id="@+id/bt_order"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/bt_comment"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:layout_toRightOf="@id/bt_comment"
+        android:background="@drawable/popbutton"
+        android:text="@string/order" />
+
+    <TextView
+        android:id="@+id/bt_gets"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@id/bt_comment"
+        android:layout_below="@id/proj_description"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:background="@drawable/popbutton"
+        android:layout_toRightOf="@id/bt_order"
+        android:text="@string/comment_gets" />
+
+</RelativeLayout>

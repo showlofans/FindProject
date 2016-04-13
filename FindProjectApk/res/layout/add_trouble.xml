@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:background="@color/top" >
+
+        <ImageView
+            android:id="@+id/back_add_trouoble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/top"
+            android:padding="10dp"
+            android:src="@drawable/navigation_back" />
+
+        <TextView
+            android:id="@+id/title_add_trouble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="@string/add_trouble"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <Button
+            android:id="@+id/deploy_trouble"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/top"
+            android:layout_alignParentRight="true"
+            android:text="@string/deploy_button"
+            android:textColor="#ffffff"
+            android:padding="10dp" /> 
+    </RelativeLayout>
+	<LinearLayout 
+	    android:id="@+id/linear_trouble"
+	    android:layout_width="fill_parent"
+	    android:orientation="vertical"
+	    android:layout_height="wrap_content">
+
+		<EditText
+		    android:id="@+id/et_add_trouble"
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:hint="请输入项目问题"
+		   >
+
+		</EditText>
+        
+    <Button
+        android:id="@+id/add_trouble"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="添加问题" />
+
+    <Button
+        android:id="@+id/del_trouble"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="删除问题" />
+	</LinearLayout>
+
+	<ListView
+	    android:id="@+id/listV_trouble"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content" >
+	</ListView>
+
+</LinearLayout>

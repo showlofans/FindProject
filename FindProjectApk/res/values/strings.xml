@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">寻找项目</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">设置</string>
+    <string name="page_settings">界面设置</string>
+    <string name="page_num">每页加载数</string>
+    <!-- 系统模块 -->
+    <string name="back">返回</string>
+    <string name="save">保存</string>
+    <!-- 我的项目模块 -->
+    <string name="person_name">昵称</string>
+    <string name="reg_name">请输入注册用户名</string>
+    <string name="follows">个人关注数:</string>
+    <string name="project_resources">资源分享地址:</string>
+    <string name="register_resources">请添加常用分享地址</string>
+    <!-- 我的个人信息 -->
+    <string name="person_id">账号</string>
+    <string name="total_gets">总评级</string>
+    <string name="e_mail">常用邮箱</string>
+    <string name="reg_email">请输入注册邮箱</string>
+    <string name="web_level">网站项目等级</string>
+    <string name="app_level">app项目等级</string>
+    <string name="platform_level">平台项目等级</string>
+    <!--
+    <string name="person_id">账号</string>
+    <string name="person_id">账号</string>
+    <string name="person_id">账号</string>
+    -->
+    <!-- 底部菜单 -->
+    <string name="project">项目</string>
+    <string name="deploy">发布项目</string>
+    <string name="myproject">我的项目</string>
+    <!-- 顶部菜单 -->
+    <string name="next">下一个</string>
+    <string name="last">上一个</string>
+    <string name="lv">....</string>
+    <!-- 登陆注册 -->
+    <string name="login">登录</string>
+    <string name="register">注册</string>
+    <string name="email">常用邮箱</string>
+    <string name="username">用户名</string>
+    <string name="user_id">用户id</string>
+    <string name="cancel">取消</string>
+    <!-- listitem、 -->
+    <string name="time">1992-10-7</string>
+    <string name="level_type">APP类等级</string>
+    <string name="comment">评论</string>
+    <string name="order">订阅</string>
+    <string name="comment_gets">投资</string>
+    <string name="project_item"> 基本功能分析
+    实现登录认证、添加项目、项目订阅、项目预留言和留言、链接分享、问题管理、项目点赞、项目发布等功能、项目查询；
+a创意项目最基本：留言，和发布，标签;
+b.在做项目最基本：项目信息发布，链接分享（自己的或别人的）和管理（预留言功能）；留言板。技术难题管理（一个技术难题可以对应至少一个链接）</string>
+    <string name="app_theme">我的村</string>
+    <!-- 下拉刷新 -->
+    <string name="pull_to_refresh">下拉可以刷新</string>
+    <string name="release_to_refresh">释放立即刷新</string>
+    <string name="refreshing">正在刷新…</string>
+    <string name="not_updated_yet">暂未更新过</string>
+    <string name="updated_at">上次更新于%1$s前</string>
+    <string name="updated_just_now">刚刚更新</string>
+    <string name="time_error">时间获取失败</string>
+    
+    <!-- 项目介绍 -->
+    <string name="project_theme">项目主题</string>
+    <string name="content_description">项目功能点概述或需求分析</string>
+    <string name="project_trouble">项目问题</string>
+    <string name="deal_trouble">查看项目问题</string>
+    <string name="project_link">添加资源链接</string>
+    <string name="resource_price">输入资源查看定价</string>
+    <string name="input_price">请输入定价</string>
+    <string name="project_res_link">项目链接</string>
+    <string name="edit_proj_link">添加项目链接</string>
+    <string name="edit_deploy_mind">输入发布意图：求体验，拉赞助，获得人气，求帮助</string>
+    <string name="add_renzhen_info">添加认证信息</string>
+    <string name = "proj_price">项目定价</string>
+    <string name = "proj_yuan">元</string>
+    
+    <string name="renzhen_info">认证信息</string>
+    <string name="font_change">调节字体</string>
+    
+    <string name="main_function">功能</string>
+    
+    <!-- 项目头标 -->
+    <string name="title_detail_project">项目详情</string>
+    <string name="title_detail_touzi">投资详情</string>
+    <string name = "update_mind">更新发布意图</string>
+    <string name = "add_decription">添加新的介绍</string>
+    <string name="add_trouble">添加新的问题</string>
+    <string name = "update_theme">更新项目主题</string>
+    
+    <string name="app_proj">APP项目</string>
+    <string name="web_proj">网站项目</string>
+    <string name="level_proj">平台项目</string>
+    
+    <string name="deploy_button">发表</string>
+    <!-- menu -->
+    <string name="my_order">订阅项目</string>
+    <string name="my_setting">设置</string>
+    <string name="my_question">问题管理</string>
+    <string name="my_answer">留言回复</string>
+    <string name="my_level">等级信息</string>
+    <string name="my_resource">我的资源</string>
+    <string name="my_gets">我的投资</string>
+    
+
+</resources>

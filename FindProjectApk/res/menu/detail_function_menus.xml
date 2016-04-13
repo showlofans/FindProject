@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/item_comment" android:title="@string/comment"/>
+    <item android:id="@+id/item_font" android:title="@string/font_change"/>
+	<item android:id="@+id/item_resources" android:title="@string/project_link"/>
+	<item android:id="@+id/item_link" android:title="@string/project_res_link"/>
+	<item android:id="@+id/item_renzhen" android:title="@string/renzhen_info"/>
+	<item android:id="@+id/item_trouble" android:title="@string/project_trouble"/>
+	<item android:id="@+id/item_order" android:title="@string/order"/>
+	<item android:id="@+id/item_get" android:title="@string/comment_gets"/>
+</menu>

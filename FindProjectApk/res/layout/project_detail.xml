@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/top" >
+
+        <TextView
+            android:id="@+id/title_project_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:clickable="true"
+            android:text="@string/title_detail_project"
+            android:tag="@string/title_detail_project"
+            android:textColor="@color/white"
+            android:textSize="18sp" />
+
+        <ImageButton
+            android:id="@+id/imgbt_menu_function"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/plus"
+            android:background="@drawable/top_action_btn"
+            android:padding="10dp" />
+
+        <ImageView
+            android:id="@+id/back_detail_project"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:background="@color/top"
+            android:padding="10dp"
+            android:src="@drawable/navigation_back" />
+
+    </RelativeLayout>
+<ScrollView android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+        <LinearLayout android:layout_width="fill_parent"
+            android:orientation="vertical"
+            android:layout_height="fill_parent">
+    <TextView
+            android:id="@+id/detail_project_content"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/project_item" />
+     <TextView
+            android:id="@+id/detail_project_link"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:text="@string/project_item" />
+     <TextView
+            android:id="@+id/detail_project_time"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:gravity="bottom|right"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/color_bule2"
+            android:text="@string/project_item" />
+     </LinearLayout>
+   </ScrollView>
+</LinearLayout>

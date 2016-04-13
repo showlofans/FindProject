@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- 用户个人信息布局 -->
+
+    <RelativeLayout
+        android:id="@+id/person_layout"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/headpic"
+            android:layout_width="80dip"
+            android:layout_height="80dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:id="@+id/hmyhome_nickkname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:layout_toRightOf="@id/headpic"
+            android:ellipsize="end"
+            android:text="@string/person_name"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/hmyhome_follows"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/hmyhome_nickkname"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="10dip"
+            android:layout_toRightOf="@id/headpic"
+            android:text="@string/follows"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/hmyhome_resources"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/headpic"
+            android:layout_below="@id/hmyhome_follows"
+            android:layout_marginLeft="10dip"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/headpic"
+            android:text="@string/project_resources"
+            android:textSize="16sp" />
+    </RelativeLayout>
+    <!-- 用户项目评级布局 -->
+
+	<android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swip_container"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+    <ListView
+        android:id="@+id/lv_myproject"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="0.15"
+        android:listSelector="@drawable/listview_bg"
+        android:minHeight="20dp" >
+    </ListView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

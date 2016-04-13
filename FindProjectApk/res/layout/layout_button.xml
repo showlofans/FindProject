@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="150dp"
+    android:background="@color/top"
+    android:orientation="vertical"
+    tools:context=".activity.Service2" >
+
+    <Button
+        android:id="@+id/bt_1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:button = "@null"
+        android:background="@drawable/popbutton"
+        android:text="注册" />
+    <Button
+        android:id="@+id/bt_2"
+        android:button = "@null"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/popbutton"
+        android:text="@string/title_detail_project" />
+	<Button
+        android:id="@+id/bt_3"
+        android:layout_width="match_parent"
+        android:button = "@null"
+        android:background="@drawable/popbutton"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="Button" />
+</LinearLayout>

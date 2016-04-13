@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/layout_renzhen"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:background="@color/top" >
+
+        <TextView
+            android:id="@+id/title_renzhen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical"
+            android:text="@string/add_renzhen_info"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/add_renzhen_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/lv_renzhen"
+            android:layout_width="fill_parent"
+            android:layout_height="202dp"
+            android:minHeight="50dp"
+            android:padding="7dp" >
+        </ListView>
+
+        <Button
+            android:id="@+id/btn_info_renzhen"
+            android:layout_width="fill_parent"
+            android:layout_height="26dp"
+            android:background="#00ff00"
+            android:text="@string/add_renzhen_info" />
+
+        <Button
+            android:id="@+id/delete_renzhen"
+            android:layout_width="fill_parent"
+            android:layout_height="26dp"
+            android:layout_gravity="bottom"
+            android:background="#f00f00"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/et_renzhen"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/bt_deploy_renzhen"
+            android:layout_width="300dp"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:text="@string/deploy_button" />
+        
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="deep">#4c4c4c</color>
+    <color name="background">#656363</color>
+    <color name="top">#4c4c4c</color>
+    <color name="text_color">#c2c3c5</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#bcbcbc</color>
+    <color name="red">#ff0012</color>
+    <color name="black">#000000</color>
+    <color name="bottom_text_selected">#ffffff</color>
+    <color name="bottom_text_unselected">#82858b</color>
+    
+    <color name="color_bule">#2F9BFF</color>
+    <color name="color_bule2">#40B3F0</color>
+    <color name="color_bule3">#99ddff</color>
+    <color name="transparent">#00000000</color>
+    
+    <color name="main_thost_bg">#f8f9fa</color>
+</resources>

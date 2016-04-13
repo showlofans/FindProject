@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sp_home -->
+    <string-array name="functions">
+		<item>设置</item>
+		<item>注册</item>
+		<item>登录</item>
+		<item>订阅</item>
+	</string-array>
+	<!-- sp_my_space -->
+	<string-array name="myhome" >
+	    <item>留言</item>
+	    <item>登录</item>
+	    <item>留言</item>
+	    <item>留言</item>
+	</string-array>
+	<string-array name="update_project">
+	    <item>添加资源链接</item>
+	    <item>添加项目链接</item>
+	    <item>添加问题信息</item>
+	    <item>添加认证信息</item>
+	    <item>更新发布意图</item>
+	    <item>添加项目描述</item>
+	    <item>修改项目主题</item>
+	    <item></item>
+	</string-array>
+	<string-array name="deploy_mind" >
+	    <item>求体验</item>
+	    <item>拉赞助</item>
+	    <item>得人气</item>
+	    <item>求帮助</item>
+	</string-array>
+	<string-array name="setting" >
+	    <item>界面设置</item>
+	</string-array>
+	<string-array name="page_sets" >
+	    <item>每页加载数</item>
+	</string-array>
+	<string-array name="page_num" >
+	    <item>5</item>
+	    <item>10</item>
+	    <item>15</item>
+	    <item>20</item>
+	    
+	</string-array>
+	<string-array name="proj_stage" >
+	    <item>想法项目</item>
+	    <item>在做项目</item>
+	</string-array>
+	<string-array name="sp_price" >
+	    <item>元</item>
+	    <item>角</item>
+	    <item>分</item>
+	</string-array>
+	<string-array name="change_title">
+	    <item>APP项目</item>
+	    <item>网站项目</item>
+	    <item>平台项目</item>
+	</string-array>
+</resources>
