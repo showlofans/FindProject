@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="con" path="melibrary.com.genuitec.eclipse.j2eedt.core.MYECLIPSE_JAVAEE_5_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry exported="true" kind="lib" path="C:/Program Files/Microsoft SQL Server JDBC Driver 3.0/sqljdbc_3.0/chs/sqljdbc4.jar"/>
+	<classpathentry exported="true" kind="lib" path="F:/A/参考项目/我的村/MyCountry(服务端）/commons-io-1.3.1.jar"/>
+	<classpathentry kind="lib" path="F:/A/参考项目/我的村/MyCountry(服务端）/struts2-core-2.1.8.jar"/>
+	<classpathentry kind="lib" path="json-lib-2.3-jdk15.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="F:/A/参考项目/我的村/MyCountry(服务端）/gson-2.2.4.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-beanutils-1.7.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-lang-2.3.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-logging-1.0.4.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/ezmorph-1.0.3.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/json-lib-2.3-jdk15.jar"/>
+	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
+</classpath>
