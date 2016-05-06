@@ -16,7 +16,7 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:name="com.stufinish.findproject.activity.MainApplication"
+        android:name=".activity.MainApplication"
         android:theme="@android:style/Theme.Light.NoTitleBar" >
        											 <!-- LoginActivity MainActivity -->
         <activity android:name=".activity.LoginActivity" >
@@ -28,14 +28,17 @@
         </activity>
         <activity android:name="com.stufinish.findproject.activity.MainActivity" >
         </activity>
+         <activity android:name="com.stufinish.findproject.activity.ResWebActivity" >
+        </activity>
+        <activity android:name="com.stufinish.findproject.view.ToastTouzi" 
+            android:theme="@style/Holo">
+        </activity>
         <activity android:name="com.stufinish.findproject.activity.PageSettingActivity" >
         </activity>
         <activity android:name="com.stufinish.findproject.activity.SelectActivity" 
              android:theme="@style/Holo" >
         </activity>
         <activity android:name="com.stufinish.findproject.activity.MainSettingActivity" >
-        </activity>
-        <activity android:name="com.stufinish.findproject.activity.ProjectsService" >
         </activity>
         <activity android:name="com.stufinish.findproject.activity.Service2" >
         </activity>
@@ -48,17 +51,9 @@
         </activity>
         <activity android:name="com.stufinish.findproject.activity.DeployDetail" >
         </activity>
-        <!-- <activity android:name="com.stufinish.findproject.activity.ListDetailActivity" >
-        </activity> -->
-      <!--   <activity android:name="com.stufinish.findproject.service.NewProjService" >
-        </activity>  -->
-        
         <activity android:name="com.stufinish.findproject.activity.RegisterActivity" >
         </activity> <!-- 个人信息编辑 -->
         
-       <!--  <activity android:name="com.stufinish.findproject.activity.BaseActivity" />
-        <activity android:name="com.stufinish.findproject.activity.ListActivity" >
-        </activity> -->
         <activity android:name="com.stufinish.findproject.activity.TouZiActivity" >
         </activity>
         <activity android:name="com.stufinish.findproject.activity.DeployActivity" >

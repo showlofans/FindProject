@@ -3,6 +3,8 @@ package com.stufinish.findproject.activity;
 import java.net.SocketTimeoutException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.http.conn.ConnectTimeoutException;
 
@@ -14,13 +16,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.database.Cursor;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.provider.MediaStore;
 import android.text.util.Linkify;
 import android.view.KeyEvent;
 import android.view.View;
@@ -29,7 +28,6 @@ import android.view.View.OnKeyListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -65,51 +63,54 @@ public class LoginActivity extends Activity implements OnClickListener {
 	public static final String MSG_SERVER_ERROR = "请求服务端出错";
 	public static final String MSG_REQUEST_ERROR = "请求服务端超时";
 	public static final String MSG_RESPONSE_ERROR = "服务端响应超时";
-	 public static PersonBean loginBean;//
+	public static PersonBean loginBean;//
 	public static final int resultGetCode = 1;
 	// 注册时resource从Edittext中读取，登录时resource从bean中读取
 	private String str_pass, str_name;
 	private UserService userService = new UserServiceImpl();
-	private CheckBox cbrp,cbal;
+	private CheckBox cbrp, cbal;
 	private Editor editor;
-	private SharedPreferences sp_login,sp_register;
+	private SharedPreferences sp_login, sp_register;
 	private PicDao dao = new PicDao(LoginActivity.this);
-//	private PersonBean loginBean;
+
+	// private PersonBean loginBean;
 
 	private void init() {
-		sp_login= getSharedPreferences("loginconfig", MODE_PRIVATE);
+		sp_login = getSharedPreferences("loginconfig", MODE_PRIVATE);
 		editor = sp_login.edit();
 		et_username_ = (EditText) findViewById(R.id.et_User_Name);
 		et_password = (EditText) findViewById(R.id.et_password);
 		et_username_.setText(sp_login.getString("loginName", ""));
 		et_password.setText(sp_login.getString("loginPassword", ""));
 		et_username_.setOnKeyListener(new OnKeyListener() {
-			   @Override
-			   public boolean onKey(View v, int keyCode, KeyEvent event) {
-//			    tv.setText(et_password.getText());
-			    // 判断输入的是URL还是EMAIL还是PHONENUMBER，并自动与系统连接
-			    Linkify.addLinks(et_username_, Linkify.WEB_URLS | Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS );
-			    return false;
-			   }
-			  });
-//		String sp1 = sp_login.getString("loginName", "");
-//		String sp2 = sp_login.getString("loginPassword", "");
-//		et_username_.setText(sp1);
-//		et_password.setText(sp2);
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				// tv.setText(et_password.getText());
+				// 判断输入的是URL还是EMAIL还是PHONENUMBER，并自动与系统连接
+				Linkify.addLinks(et_username_, Linkify.WEB_URLS
+						| Linkify.EMAIL_ADDRESSES | Linkify.PHONE_NUMBERS);
+				return false;
+			}
+		});
+		// String sp1 = sp_login.getString("loginName", "");
+		// String sp2 = sp_login.getString("loginPassword", "");
+		// et_username_.setText(sp1);
+		// et_password.setText(sp2);
 		bt_login = (Button) findViewById(R.id.btn_login);
 		bt_register = (Button) findViewById(R.id.btn_register);
-		if(!bt_register.isEnabled()){
+		if (!bt_register.isEnabled()) {
 			bt_register.setEnabled(true);
 		}
-		if(!bt_login.isEnabled()){
+		if (!bt_login.isEnabled()) {
 			bt_login.setEnabled(true);
 		}
 		img_register = (FadeImageView) findViewById(R.id.regist_img);
-//		SharedPreferences sp_picPreferences = getSharedPreferences("picfile", Activity.MODE_PRIVATE);
-//		picturePath = sp_picPreferences.getString("pic", "");
+		// SharedPreferences sp_picPreferences = getSharedPreferences("picfile",
+		// Activity.MODE_PRIVATE);
+		// picturePath = sp_picPreferences.getString("pic", "");
 		String tt = sp_login.getString("loginName", "");
 		picturePath = dao.getPic(tt);
-		if(picturePath!=null){
+		if (picturePath != null) {
 			img_register.setImageBitmap(BitmapFactory.decodeFile(picturePath));
 		}
 		cbrp = (CheckBox) findViewById(R.id.cbrp);
@@ -120,15 +121,16 @@ public class LoginActivity extends Activity implements OnClickListener {
 			editor.putString("loginName", loginName);
 			editor.putString("loginPassword", loginPassword);
 			editor.commit();
-		}else{
+		} else {
 			editor.clear();
 		}
-		if(cbal.isChecked()){
+		if (cbal.isChecked()) {
+			doLogin(sp_login.getString("loginName", ""),sp_login.getString("loginPassword", ""));
 			editor.putBoolean("yorn", true);
-		}else{
+		} else {
 			editor.putBoolean("yorn", false);
 		}
-		
+
 		bt_login.setOnClickListener(this);
 		bt_register.setOnClickListener(this);
 		img_register.setOnClickListener(this);
@@ -159,8 +161,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 					if (dialog != null) {
 						dialog.dismiss();
 					}
-					if(dialogllDialog!=null)
-					{
+					if (dialogllDialog != null) {
 						dialogllDialog.dismiss();
 					}
 					break;
@@ -174,10 +175,12 @@ public class LoginActivity extends Activity implements OnClickListener {
 					loginBean.setPic_file(picturePath);
 					dao.addPic(loginBean);
 					if (cbrp.isChecked()) {
-					editor.putString("loginName", et_username_.getText().toString());
-					editor.putString("loginPassword", et_password.getText().toString());
-					editor.commit();
-					}else{
+						editor.putString("loginName", et_username_.getText()
+								.toString());
+						editor.putString("loginPassword", et_password.getText()
+								.toString());
+						editor.commit();
+					} else {
 						editor.clear();
 					}
 					showTip(MSG_LOGIN_SUCCESS);
@@ -206,14 +209,14 @@ public class LoginActivity extends Activity implements OnClickListener {
 			if (msgStr.equals("exist")) {
 				Toast.makeText(LoginActivity.this, "用户已存在", Toast.LENGTH_SHORT)
 						.show();
-				if(dialogllDialog!=null){
+				if (dialogllDialog != null) {
 					dialogllDialog.dismiss();
 				}
 			} else if (msgStr.equals("success")) {
 				if (dialogllDialog != null) {
 					dialogllDialog.dismiss();
 				}
-//				loginBean = new PersonBean(str_name, str_res, str_pass);
+				// loginBean = new PersonBean(str_name, str_res, str_pass);
 				// registerDao.register(loginBean);// 往数据库里添加注册用户信息
 				AlertDialog dialog = new AlertDialog.Builder(LoginActivity.this)
 						.create();
@@ -234,7 +237,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 								registerIntent.setClass(LoginActivity.this,
 										MainActivity.class);
 								Editor editor1 = sp_login.edit();
-							
+
 								editor1.putString("loginName", str_name);
 								editor1.putString("loginPassword", str_pass);
 								editor1.putString("resource", str_res);
@@ -242,7 +245,7 @@ public class LoginActivity extends Activity implements OnClickListener {
 								startActivity(registerIntent);
 								Toast.makeText(LoginActivity.this, "注册成功!!",
 										Toast.LENGTH_SHORT).show();
-								 finish();
+								finish();
 							}
 						});
 				dialog.show();
@@ -261,9 +264,9 @@ public class LoginActivity extends Activity implements OnClickListener {
 		dialogllDialog.setMessage("验证中...");
 		dialogllDialog.setCancelable(true);
 		dialogllDialog.show();
-		 
+
 		final Map<String, String> params = new HashMap<String, String>();
-		
+
 		// params.put("fromtype", name_edit);
 		// 传递标题
 		params.put("str_name", name);
@@ -275,13 +278,13 @@ public class LoginActivity extends Activity implements OnClickListener {
 			public void run() {
 				String msgStr = HttpUploadUtil.postWithoutFile(
 						Constant.addPersonJ, params);
-				 Bundle b = new Bundle();
-				 // 将内容字符串放进数据Bundle中
-				 b.putString("msg", msgStr);
+				Bundle b = new Bundle();
+				// 将内容字符串放进数据Bundle中
+				b.putString("msg", msgStr);
 				// 创建消息对象
 				Message msg = hd.obtainMessage();
 				// 设置数据Bundle到消息中
-				 msg.setData(b);
+				msg.setData(b);
 				// 设置消息标识
 				msg.what = Constant.loginForegister;
 				// 发送消息
@@ -304,48 +307,62 @@ public class LoginActivity extends Activity implements OnClickListener {
 				Toast.makeText(LoginActivity.this, "请先输入用户名和注册邮箱！",
 						Toast.LENGTH_SHORT).show();
 			} else {
-				/**
-				 * 输入验证
-				 */
+
 				/**
 				 * loading...
 				 */
-				doLogin(loginName,loginPassword);
-							}
+//				Pattern pattern = Pattern
+//						.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+//				Matcher matcher = pattern.matcher(loginPassword);
+//				if (matcher.matches()){
+					doLogin(loginName, loginPassword);
+//				}
+					
+			}
 			break;
 		case R.id.btn_register:
-			if(!bt_register.isEnabled()){
+			if (!bt_register.isEnabled()) {
 				bt_register.setEnabled(true);
 			}
 			str_pass = et_password.getText().toString();
 			str_name = et_username_.getText().toString();
-			if(!(str_pass.equals(sp_login.getString("loginPassword", ""))&&str_name.equals(sp_login.getString("loginName", "")))){
-			if (str_name.equals("") && str_pass.equals("")) {
-				Toast.makeText(LoginActivity.this, "请先输入用户名和注册邮箱！",
-						Toast.LENGTH_SHORT).show();
-			}
-			if (linear_register.getVisibility() == View.GONE) {
-				linear_register.setVisibility(View.VISIBLE);
-				et_register.setFocusable(true);
-				Toast.makeText(LoginActivity.this, "请先完善资源地址信息\n或者点击头像进行登录",
-						Toast.LENGTH_LONG).show();
-				bt_login.setEnabled(false);
-			}
-			str_res = et_register.getText().toString();
-			if (str_res.length() > 0) {
-				register(str_name, str_pass, str_res);
-			}
-			}else{
+			if (!(str_pass.equals(sp_login.getString("loginPassword", "")) && str_name
+					.equals(sp_login.getString("loginName", "")))) {
+				if (str_name.equals("") && str_pass.equals("")) {
+					Toast.makeText(LoginActivity.this, "请先输入用户名和注册邮箱！",
+							Toast.LENGTH_SHORT).show();
+				}
+				if (linear_register.getVisibility() == View.GONE) {
+					linear_register.setVisibility(View.VISIBLE);
+					et_register.setFocusable(true);
+					Toast.makeText(LoginActivity.this,
+							"请先完善资源地址信息\n或者点击头像进行登录", Toast.LENGTH_LONG).show();
+					bt_login.setEnabled(false);
+				}
+				str_res = et_register.getText().toString();
+				if (str_res.length() > 0) {
+					Pattern pattern = Pattern
+							.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+					Matcher matcher = pattern.matcher(loginPassword);
+					if (matcher.matches()){
+					register(str_name, str_pass, str_res);
+					}else{
+						Toast.makeText(LoginActivity.this,
+								"输入邮箱格式不正确！", Toast.LENGTH_LONG).show();
+					}
+					
+				}
+			} else {
 				bt_register.setEnabled(false);
-				Toast.makeText(LoginActivity.this, "请直接登录",
-						Toast.LENGTH_LONG).show();
+				Toast.makeText(LoginActivity.this, "请直接登录", Toast.LENGTH_LONG)
+						.show();
 			}
 			break;
 		case R.id.regist_img:
-//			Intent i = new Intent(  
-//                    Intent.ACTION_PICK,  
-//                    android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//			 startActivityForResult(i, resultGetCode);
+			// Intent i = new Intent(
+			// Intent.ACTION_PICK,
+			// android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+			// startActivityForResult(i, resultGetCode);
 			if (linear_register.getVisibility() == View.GONE)
 				linear_register.setVisibility(View.VISIBLE);
 			else if (et_register.getText().toString().length() > 0) {
@@ -442,23 +459,25 @@ public class LoginActivity extends Activity implements OnClickListener {
 	}
 
 	private String picturePath;
-//	@Override
-//	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//		// TODO Auto-generated method stub
-//		super.onActivityResult(requestCode, resultCode, data);
-//		if (requestCode == resultGetCode && resultCode == RESULT_OK && null != data){
-//			Uri selectedImage = data.getData(); 
-//			String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//			Cursor cursor = getContentResolver().query(selectedImage,  
-//                    filePathColumn, null, null, null);  
-//			cursor.moveToFirst();
-//			int columnIndex = cursor.getColumnIndex(filePathColumn[0]);  
-//            picturePath = cursor.getString(columnIndex);  
-//            cursor.close();  
-//            img_register.setImageBitmap(BitmapFactory.decodeFile(picturePath));
-//		}
-//	}
-	
+	// @Override
+	// protected void onActivityResult(int requestCode, int resultCode, Intent
+	// data) {
+	// // TODO Auto-generated method stub
+	// super.onActivityResult(requestCode, resultCode, data);
+	// if (requestCode == resultGetCode && resultCode == RESULT_OK && null !=
+	// data){
+	// Uri selectedImage = data.getData();
+	// String[] filePathColumn = { MediaStore.Images.Media.DATA };
+	// Cursor cursor = getContentResolver().query(selectedImage,
+	// filePathColumn, null, null, null);
+	// cursor.moveToFirst();
+	// int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+	// picturePath = cursor.getString(columnIndex);
+	// cursor.close();
+	// img_register.setImageBitmap(BitmapFactory.decodeFile(picturePath));
+	// }
+	// }
+
 	// private static class mHandler extends Handler {
 	//
 	// private final WeakReference<Activity> mActivity;

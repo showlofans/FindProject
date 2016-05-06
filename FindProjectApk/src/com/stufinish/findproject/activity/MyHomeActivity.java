@@ -1,7 +1,9 @@
 package com.stufinish.findproject.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -16,9 +18,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -36,6 +40,7 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -47,17 +52,18 @@ import android.widget.Toast;
 import com.stufinish.findproject.R;
 import com.stufinish.findproject.adapter.MyAdapter;
 import com.stufinish.findproject.dao.PicDao;
-import com.stufinish.findproject.model2.LevelBean;
 import com.stufinish.findproject.model2.PersonBean;
 import com.stufinish.findproject.model2.ProjectBean;
-import com.stufinish.findproject.service.Send;
 import com.stufinish.findproject.utils.Constant;
 import com.stufinish.findproject.utils.File2StringUtil;
+import com.stufinish.findproject.utils.HttpUploadUtil;
 import com.stufinish.findproject.utils.NetUtils;
 
-public class MyHomeActivity extends Activity implements OnClickListener,
+public class MyHomeActivity extends Activity implements 
 		SwipeRefreshLayout.OnRefreshListener, OnScrollListener {
 	private static final String TAG = "MyHomeActivity";// 定义当前标签
+	private static final int ITEM_MODIFY = 1;
+	private static final int ITEM_DELETE = 2;
 	private static final int resultPicCode = 1;
 	private static int my_home_count = -1;
 	private RelativeLayout personlayout;
@@ -67,13 +73,13 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 	private List<ProjectBean> list;
 	private String x;
 	private Handler handler;
-	private ArrayList<LevelBean> levelList;
+	// private ArrayList<LevelBean> levelList;
 	private SharedPreferences sp;
 	private String personName, person_resource;
 	private MyAdapter adapter;
 	private PersonBean pbean = LoginActivity.loginBean;
 	private String email = pbean.getE_mail();
-	private Send send;
+	// private Send send;
 	// private RefreshLayout swiplayout;
 	private SwipeRefreshLayout swiplayout;
 	// 加载更多
@@ -90,8 +96,10 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 	private String pic_result;
 	private String fileName;
 	private PicDao dao = new PicDao(MyHomeActivity.this);
-	private ProjectBean proj;
+	private ProjectBean proj,del_proj;
 	private Handler hd_refresh;
+	private String deleUrl = Constant.deleProject;
+	private Handler handler_del;
 
 	// private Editor editor;
 	@Override
@@ -102,8 +110,24 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 
 		initWidget();
 		initView();
+		handler_del = new Handler(){
+			public void handleMessage(Message msg) {
+				String stres = msg.getData().getString("msg");
+				if(stres.equals("success")){
+					list.remove(del_proj);
+					Toast.makeText(MyHomeActivity.this, "删除成功",
+							Toast.LENGTH_SHORT).show();
+					adapter.notifyDataSetChanged();
+				}else{
+					Toast.makeText(MyHomeActivity.this, del_proj.getProject_theme()+del_proj,
+							Toast.LENGTH_SHORT).show();
+				}
+				
+			}
+		};
 
 		// send = new SendService();
+		//
 		lv_container.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -115,6 +139,48 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 				intent.putExtra("my_change", "my_service");
 				adapter.setSelectItem(position);
 				startActivity(intent);
+			}
+		});
+		lv_container.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				del_proj = (ProjectBean)lv_container.getItemAtPosition(position);
+				final String[] items = new String[]{"删除"};
+				Builder builder = new AlertDialog.Builder(MyHomeActivity.this);
+				builder.setItems(items, new DialogInterface.OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// 删除数据
+						final Map<String, String> tt = new HashMap<String, String>();
+						tt.put("proj_id", del_proj.getProject_id()+"");
+						new Thread() {
+							public void run() {
+								String msgStr = HttpUploadUtil.postWithoutFile(deleUrl,
+										tt);
+								Bundle b = new Bundle();
+								// 将内容字符串放进数据Bundle中
+								b.putString("msg", msgStr);
+								// 、创建消息对象
+								Message msg = handler_del.obtainMessage();
+								// 设置数据Bundle到消息中
+								msg.setData(b);
+								// 设置消息标识
+								msg.what = 100;
+								// 发送消息
+								handler_del.sendMessage(msg);
+							} // run
+
+						}.start();
+//						
+//						Toast.makeText(MyHomeActivity.this, stres,
+//								Toast.LENGTH_SHORT).show();
+					}
+				});
+				builder.create().show();
+				return true;
 			}
 		});
 		if (NetUtils.isConnected(MyHomeActivity.this)) {
@@ -196,16 +262,18 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 			}
 		};
 	}
+	
 	private void loadStart() {
 		sp = getSharedPreferences("page", MODE_PRIVATE);
 		sizes = sp.getInt("pageNum", 10) + "";
 		new GoThread().start();
 	}
+
 	private void startRefresh() {
-			index = 1;
-			sp = getSharedPreferences("page", MODE_PRIVATE);
-			sizes = sp.getInt("pageNum", 10) + "";
-			new RefreshThread().start();
+		index = 1;
+		sp = getSharedPreferences("page", MODE_PRIVATE);
+		sizes = sp.getInt("pageNum", 10) + "";
+		new RefreshThread().start();
 	}
 
 	// public static String Serch(String e_mail, String url) {
@@ -231,15 +299,15 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 
 	private void initWidget() {
 		personlayout = (RelativeLayout) findViewById(R.id.person_layout);
-		personlayout.setOnClickListener(this);
+		personlayout.setOnClickListener(listener);
 		iv_headpic = (ImageView) findViewById(R.id.headpic);
-		iv_headpic.setOnClickListener(this);
+		iv_headpic.setOnClickListener(listener);
 		lv_container = (ListView) findViewById(R.id.lv_myproject);
 		v_moreView = getLayoutInflater().inflate(R.layout.refresh_button, null);
 		bt_load_more = (Button) v_moreView.findViewById(R.id.bt_load);
 		pbBar = (ProgressBar) v_moreView.findViewById(R.id.pg);
 		lv_container.addFooterView(v_moreView);
-		bt_load_more.setOnClickListener(this);
+		bt_load_more.setOnClickListener(listener);
 		lv_container.setOnScrollListener(this);
 	}
 
@@ -295,7 +363,7 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 			Log.i("msg", "------>sss" + sss);
 			Log.i("msg", "------>isok" + isok);
 			Log.i("msg", "------>num" + num);
-			if(num==0){
+			if (num == 0) {
 				Toast.makeText(MyHomeActivity.this, "您还没有添加项目！",
 						Toast.LENGTH_LONG).show();
 			}
@@ -346,37 +414,39 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 		tv_name.setText(pbean.getPerson_name());
 		tv_resource.setText(pbean.getProject_resource());
 	}
-
-	@Override
-	public void onClick(View v) {
-		switch (v.getId()) {
-		case R.id.bt_load:
-			loadStart();
-			break;
-		case R.id.person_layout:
-			Intent intent = new Intent(MyHomeActivity.this,
-					RegisterActivity.class);
-			intent.putExtra("person", pbean);
-			startActivity(intent);
-			break;
-		case R.id.headpic:
-			Intent i = new Intent(
-					Intent.ACTION_PICK,
-					android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-			startActivityForResult(i, resultPicCode);
-			break;
-		/*
-		 * case R.id.mime_layout_01:
-		 * 
-		 * Intent photointent=new Intent(MimePageActivity.this,
-		 * MimePhotoActivity.class); startActivity(photointent);
-		 * 
-		 * break;
-		 */
-		default:
-			break;
+	View.OnClickListener listener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			switch (v.getId()) {
+			case R.id.bt_load:
+				loadStart();
+				break;
+			case R.id.person_layout:
+				Intent intent = new Intent(MyHomeActivity.this,
+						RegisterActivity.class);
+				intent.putExtra("person", pbean);
+				startActivity(intent);
+				break;
+			case R.id.headpic:
+				Intent i = new Intent(
+						Intent.ACTION_PICK,
+						android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+				startActivityForResult(i, resultPicCode);
+				break;
+			/*
+			 * case R.id.mime_layout_01:
+			 * 
+			 * Intent photointent=new Intent(MimePageActivity.this,
+			 * MimePhotoActivity.class); startActivity(photointent);
+			 * 
+			 * break;
+			 */
+			default:
+				break;
+			}
+		
 		}
-	}
+	}; 
 
 	private Handler hd;// 从图库上传照片通讯
 	private String picturePath;// 图片路径
@@ -476,32 +546,24 @@ public class MyHomeActivity extends Activity implements OnClickListener,
 		return ++my_home_count;
 	}
 
-	private static long mExitTime;
+	private long exitTime = 0;
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			
-				if ((System.currentTimeMillis() - mExitTime) > 2000) {
-					SharedPreferences sp = getSharedPreferences("tab", MODE_PRIVATE);
-					Editor editor = sp.edit();
-					editor.putInt("id", R.id.news_radio);
-					editor.commit();
-					Toast.makeText(this, "关闭应用", Toast.LENGTH_SHORT).show();
-					mExitTime = System.currentTimeMillis();
-				} else {
-//					MainActivity.setId(R.id.news_radio);
-					SharedPreferences sp = getSharedPreferences("tab", MODE_PRIVATE);
-					Editor editor = sp.edit();
-					editor.putInt("id", R.id.news_radio);
-					editor.commit();
-////					MainApplication application = MainApplication.getInstance();
-//					MainApplication.setTag(R.id.news_radio);
-					finish();
-				}
-				return false;
+		if (keyCode == KeyEvent.KEYCODE_BACK
+				&& event.getAction() == KeyEvent.ACTION_DOWN) {
+			if ((System.currentTimeMillis() - exitTime) > 2000) {
+				Toast.makeText(getApplicationContext(), "再按一次退出程序",
+						Toast.LENGTH_SHORT).show();
+				exitTime = System.currentTimeMillis();
+			} else {
+				MainApplication app = (MainApplication) getApplication();
+				app.setTag(R.id.news_radio);
+				MyHomeActivity.this.finish();
+				// System.exit(0);
 			}
-			
+			return true;
+		}
 		return super.onKeyDown(keyCode, event);
 	}
 }

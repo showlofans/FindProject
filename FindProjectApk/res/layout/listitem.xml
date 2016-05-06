@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f0f0f0" >
+    android:background="@drawable/listview_bg" >
 
     <TextView
         android:id="@+id/li_nickkname"
@@ -93,7 +93,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:background="@drawable/popbutton"
+        android:background="@drawable/anti_pop"
         android:layout_toRightOf="@id/bt_order"
         android:text="@string/comment_gets" />
 

@@ -58,6 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textStyle="bold"
+            android:textColorLink="@color/red"
             android:layout_marginTop="10dp"
             android:text="@string/project_item" />
      <TextView

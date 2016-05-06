@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:button = "@null"
-        android:background="@drawable/popbutton"
+        android:background="@drawable/anti_pop"
         android:text="注册" />
     <Button
         android:id="@+id/bt_2"

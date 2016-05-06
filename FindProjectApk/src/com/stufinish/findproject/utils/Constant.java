@@ -27,6 +27,8 @@ public class Constant {// 100.73.80.118 192.168.43.225 192.168.56.1
 	public static final String getTrouble = aURL + "/servlet/GetTroubleServlet";
 	public static final String addPersonJ = aURL + "/AddJsp/Add_person.jsp";
 	public static final String imgUrl = aURL + "/AddJsp/Update_image.jsp";
+	// 根据项目id，删除项目
+	public static final String deleProject = aURL + "/AddJsp/DeleProject.jsp";
 
 	public static final int PerseonActivity = 9;
 	public static final int USERINFO = 10;

@@ -20,7 +20,6 @@ public class HttpUploadUtil
 	// //actionUrl��ʾ�����URL��Map<String, String> params��ʾ����Ĳ�������
 	public static String postWithoutFile(String actionUrl,Map<String, String> params)
 	{		
-		//String result="";
 		//1����HttpClient����
 		HttpClient httpclient = new DefaultHttpClient();
 		//2����ָ����URL������HTTPPOST����
@@ -41,20 +40,8 @@ public class HttpUploadUtil
 		   HttpResponse response; 
 		   //ִ��HttpClient����
 		   response=httpclient.execute(httppost); 
-//		   //��ȡ���
-//		   if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK)
-//		   {
-//			   result+=EntityUtils.toString(response.getEntity());
-//			   
-//		   }else
-//		   {
-//			   
-//			   result="����ʧ��!";
-//		   }
-//		   return result;
-		   
-		  InputStream in=response.getEntity().getContent();
-		
+		   InputStream in=response.getEntity().getContent();
+			
 		   //�����ֽ����������
 		   ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		   //������������ȡ���������
@@ -68,11 +55,22 @@ public class HttpUploadUtil
 		    baos.close();
 		    //�������ַ�����������ݣ���
 		    return MyConverter.unescape(new String(data).trim());
-		  
-		  } catch (Exception e) 
+		 } catch (Exception e) 
 		  { 
 		   e.printStackTrace(); 
-		   return "error";
+		   return "cuowu";
 		  }
+//		   //��ȡ���
+//		   if(response.getStatusLine().getStatusCode()==HttpStatus.SC_OK)
+//		   {
+//			   result+=EntityUtils.toString(response.getEntity());
+//			   
+//		   }else
+//		   {
+//			   
+//			   result="����ʧ��!";
+//		   }
+//		   return result;
+		   
 	}
 }

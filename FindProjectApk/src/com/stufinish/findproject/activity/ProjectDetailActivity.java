@@ -3,6 +3,7 @@ package com.stufinish.findproject.activity;
 import com.stufinish.findproject.R;
 import com.stufinish.findproject.model2.ProjectBean;
 import com.stufinish.findproject.utils.InitPopWindow;
+import com.stufinish.findproject.view.ToastResource;
 
 import android.R.integer;
 import android.R.string;
@@ -29,7 +30,7 @@ import android.widget.Toast;
  * @author jefferson
  * 
  */
-public class ProjectDetailActivity extends BaseActivity implements OnClickListener {
+public class ProjectDetailActivity extends Activity implements OnClickListener {
 
 	public static final String TAG = "ProjectDetailActivity";// 定义当前标签
 	private TextView tv_title, tv_content; // 控件：项目标题和内容
@@ -47,6 +48,8 @@ public class ProjectDetailActivity extends BaseActivity implements OnClickListen
 	private InitPopWindow initpop;
 	private PopupWindow popDetail;
 	private TextView tv_link,tv_time;
+	private String proj_theme;
+	private String str_link;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -116,14 +119,26 @@ public class ProjectDetailActivity extends BaseActivity implements OnClickListen
 		tv_title = (TextView) findViewById(R.id.title_project_detail);
 		tv_link = (TextView)findViewById(R.id.detail_project_link);
 		tv_time = (TextView)findViewById(R.id.detail_project_time);
-		tv_title.setText(proj.getProject_theme().toString());
+		proj_theme = proj.getProject_theme().toString();
+		tv_title.setText(proj_theme);
+		str_link = proj.getProject_link().toString();
+		tv_link.setText(str_link + "\n");
+		tv_link.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent webIntent = new Intent(ProjectDetailActivity.this, ResWebActivity.class);
+				webIntent.putExtra("resUrl", str_link);
+				startActivity(webIntent);
+			}
+			
+		});
 		img_back = (ImageView) findViewById(R.id.back_detail_project);
 		img_back.setOnClickListener(backListener);
 		imgbt_function = (ImageButton) findViewById(R.id.imgbt_menu_function);
 		imgbt_function.setOnClickListener(functionListener);
 		tv_content = (TextView) findViewById(R.id.detail_project_content);
 		tv_content.setText(proj.getContent_description().toString() + "\n");
-		tv_link.setText(proj.getProject_link().toString() + "\n");
 		tv_time.setText( proj.getProject_time().toString());
 	}
 
@@ -143,6 +158,9 @@ public class ProjectDetailActivity extends BaseActivity implements OnClickListen
 			showToast(bt_theme);
 			break;
 		case R.id.bt_add_resource:
+			Intent resIntent = new Intent(ProjectDetailActivity.this,ToastResource.class);
+			resIntent.putExtra("theme", proj_theme);
+			startActivity(resIntent);
 			showToast(bt_resource);
 			break;
 		case R.id.bt_add_renzhen:

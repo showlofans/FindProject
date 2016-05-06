@@ -135,33 +135,22 @@ public class DeployActivity extends Activity implements OnClickListener {
 //		sp_home = (Spinner)findViewById(R.id.sp_home);	//功能
 //		sp_function = (Spinner) findViewById(R.id.sp_my_space);	//我的家
 	}
-	
-	private static long mExitTime;
 
+	private long exitTime = 0;
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			
-				if ((System.currentTimeMillis() - mExitTime) > 2000) {
-					SharedPreferences sp = getSharedPreferences("tab", MODE_PRIVATE);
-					Editor editor = sp.edit();
-					editor.putInt("id", R.id.contacts_radio);
-					editor.commit();
-					Toast.makeText(this, "关闭应用", Toast.LENGTH_SHORT).show();
-					mExitTime = System.currentTimeMillis();
-				} else {
-//					MainApplication application = MainApplication.getInstance();
-//					MainApplication.setTag(R.id.contacts_radio);
-					SharedPreferences sp = getSharedPreferences("tab", MODE_PRIVATE);
-					Editor editor = sp.edit();
-					editor.putInt("id", R.id.contacts_radio);
-					editor.commit();
-//					MainActivity.setId(R.id.contacts_radio);
-					finish();
-				}
-				return false;
-			}
-			
-		return super.onKeyDown(keyCode, event);
+	    if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){   
+	        if((System.currentTimeMillis()-exitTime) > 2000){  
+	            Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();                                
+	            exitTime = System.currentTimeMillis();   
+	        } else {
+	        	MainApplication app = (MainApplication)getApplication();
+	        	app.setTag(R.id.contacts_radio);
+	            finish();
+//	            System.exit(0);
+	        }
+	        return true;   
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 }

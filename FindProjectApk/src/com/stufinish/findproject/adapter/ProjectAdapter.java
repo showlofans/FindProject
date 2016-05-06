@@ -6,6 +6,7 @@ import java.util.List;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stufinish.findproject.R;
+import com.stufinish.findproject.activity.DeployDetail;
 import com.stufinish.findproject.model2.ProjectBean;
+import com.stufinish.findproject.view.ToastTouzi;
 
 public class ProjectAdapter extends BaseAdapter {
 
@@ -57,6 +60,7 @@ public class ProjectAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		final int pos = position;
 		ViewHolder viewHolder = null;
 		if (null == convertView) {
 			LayoutInflater inflater = LayoutInflater.from(context);
@@ -78,9 +82,23 @@ public class ProjectAdapter extends BaseAdapter {
 					.findViewById(R.id.bt_comment);
 			viewHolder.bt2 = (TextView) convertView.findViewById(R.id.bt_order);
 			viewHolder.bt3 = (TextView) convertView.findViewById(R.id.bt_gets);
+			viewHolder.bt3.setOnClickListener(new OnClickListener(){
+
+				@Override
+				public void onClick(View v) {
+					int id = getItem(pos).getProject_id();
+					String proj_theme = getItem(pos).getProject_theme();
+//					Toast.makeText(context, id+"", Toast.LENGTH_SHORT)
+//					.show();
+					Intent touIntent = new Intent(v.getContext(),ToastTouzi.class);
+					touIntent.putExtra("proj_id", id);
+					touIntent.putExtra("proj_theme", proj_theme);
+					context.startActivity(touIntent);
+				}
+				
+			});
 			registerOnClick(viewHolder.bt1);
 			registerOnClick(viewHolder.bt2);
-			registerOnClick(viewHolder.bt3);
 
 			// tv_project tv_time tv_level tv_name
 			// tv_name.setText(proj.getPerson().getPerson_name());
@@ -116,7 +134,6 @@ public class ProjectAdapter extends BaseAdapter {
 		TextView bt2;
 		TextView bt3;
 	}
-
 	private void registerOnClick(TextView bt) {
 		bt.setOnClickListener(new OnClickListener() {
 
@@ -142,10 +159,6 @@ public class ProjectAdapter extends BaseAdapter {
 					// }
 
 					break;
-				case R.id.bt_gets:
-					dogets();
-					Toast.makeText(context, "投资失败", Toast.LENGTH_SHORT).show();
-					break;
 				default:
 					break;
 				}
@@ -154,94 +167,22 @@ public class ProjectAdapter extends BaseAdapter {
 
 	}
 
-	public void dogets() {
-		AlertDialog alert = new AlertDialog.Builder(context).create();
-		LayoutInflater inflater = LayoutInflater.from(context);
-		final View textEntryView = inflater.inflate(
-				R.layout.alert_dialog_text_entry, null);
-		final EditText touzi_quantityET = (EditText) textEntryView
-				.findViewById(R.id.etv_dialog_number);
-		alert.setTitle("请选择投资金额");
-		alert.setView(textEntryView);
-		alert.setButton("确定", new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// int touzi_gets = Integer.parseInt(touzi_quantityET.getText()
-				// .toString());
-				// if (touzi_gets > 0 && LoginActivity.loginBean != null) {
-				// final Map<String, String> params = new HashMap<String,
-				// String>();
-				// // email,touzi_gets
-				// params.put("proj_id", proj.getProject_id());
-				// params.put("email", LoginActivity.loginBean.getE_mail());
-				// params.put("touzi_gets", "touzi_gets");
-				// new Thread() {
-				// public void run() {
-				// String msgStr = HttpUploadUtil.postWithoutFile(Url,
-				// params);
-				// Bundle b = new Bundle();
-				// // 将内容字符串放进数据Bundle中
-				// b.putString("msg", msgStr);
-				// // 、创建消息对象
-				// Message msg = new Message();
-				// // 设置数据Bundle到消息中
-				// msg.setData(b);
-				// // 设置消息标识
-				// msg.what = 100;
-				// // 发送消息
-				// handler.sendMessage(msg);
-				//
-				// } // run
-				//
-				// }.start();// thread
-				// handler = new Handler() {
-				// @Override
-				// public void handleMessage(Message msg) {
-				// Toast.makeText(context, "您已投出", Toast.LENGTH_SHORT).show();
-				// super.handleMessage(msg);
-				// }
-				// };
-				// }
+//	public void dogets() {
+//		AlertDialog alert = new AlertDialog.Builder(context).create();
+//		LayoutInflater inflater = LayoutInflater.from(context);
+//		final View textEntryView = inflater.inflate(
+//				R.layout.alert_dialog_text_entry, null);
+//		final EditText touzi_quantityET = (EditText) textEntryView
+//				.findViewById(R.id.etv_dialog_number);
+//		alert.setTitle("请选择投资金额");
+//		alert.setView(textEntryView);
+//		alert.setButton("确定", new DialogInterface.OnClickListener() {
+//			@Override
+//			public void onClick(DialogInterface dialog, int which) {
+//
+//				Toast.makeText(context, "投资额=", Toast.LENGTH_LONG).show();
+//			}
+//		});
+//	}
 
-				Toast.makeText(context, "投资额=", Toast.LENGTH_LONG).show();
-				// bt_gets.setText(level.getContact_gets() + touzi_gets);
-			}
-		});
-	}
-
-	// public String send(String projecturl) {
-	// String str = null;
-	// HttpClient httpclient = new DefaultHttpClient();
-	// HttpPost request = new HttpPost(projecturl);
-	// // NameValuePair loginpasvaluePair = new BasicNameValuePair("proj_id",
-	// // proj.getProject_id());
-	// // List<NameValuePair> parameters = new ArrayList<NameValuePair>();
-	// // parameters.add(loginpasvaluePair);
-	// // try {
-	// // request.setEntity(new UrlEncodedFormEntity(parameters, HTTP.UTF_8));
-	// // } catch (UnsupportedEncodingException e1) {
-	// // // TODO Auto-generated catch block
-	// // e1.printStackTrace();
-	// // }
-	// HttpResponse response;
-	// try {
-	// Log.i("send(", "执行请求1");
-	// response = httpclient.execute(request);// 执行请求
-	// Log.i("response", response.toString());
-	// if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) { //
-	// 如果请求成功
-	// str = EntityUtils.toString(response.getEntity()).trim();
-	// Log.i("send(", str);
-	// return str;
-	// } else {
-	// str = "请求失败";
-	// Log.i("send(", "请求失败");
-	// return str;
-	//
-	// }
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// return str;
-	// }
 }

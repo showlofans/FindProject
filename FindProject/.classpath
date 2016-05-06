@@ -20,5 +20,8 @@
 	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/ezmorph-1.0.3.jar"/>
 	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/json-lib-2.3-jdk15.jar"/>
 	<classpathentry kind="lib" path="F:/myeclipse工作空间/FindProject/commons-httpclient-3.1.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/el-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/jsp-api.jar"/>
+	<classpathentry kind="lib" path="WebRoot/WEB-INF/lib/servlet-api.jar"/>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>

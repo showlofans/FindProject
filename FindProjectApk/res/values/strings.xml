@@ -96,6 +96,8 @@ b.在做项目最基本：项目信息发布，链接分享（自己的或别人
     <string name="level_proj">平台项目</string>
     
     <string name="deploy_button">发表</string>
+    <string name="toast_touzi_button">确认 </string>
+    <string name="toast_cancel_button">取消投资 </string>
     <!-- menu -->
     <string name="my_order">订阅项目</string>
     <string name="my_setting">设置</string>

@@ -1,26 +1,33 @@
-/*package com.findproject.DB;
+package com.findproject.DB;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import com.findproject.domain.PersonBean;
-import com.findproject.domain.ProjectBean;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class ProjectDB {
-	private static PersonBean person;
-	private static Map map=new LinkedHashMap();
-	static{
-		//String project_id, 
-		//String content_description,
-		//String project_theme,
-		//int project_order, 
-		//String project_trouble,
-		//int comment_gets,
-		//PersonBean person
-	map.put("1",new ProjectBean("1","∂•∂•∂•∂•","web app",30,"Œ Ã‚1",300,person));
+	private Connection conn = null;
+	private Statement stmt = null;
+	private ResultSet rs = null;
+
+	public ProjectDB() {
+		conn = DBConnection.getConnection();
 	}
-	public static Map getall(){
-		return map;
+
+	public String delProject(int proj_id){
+		String tag = "";
+		StringBuffer sql = new StringBuffer();
+		sql.append("delete project where proj_id = ");
+		sql.append(proj_id+"");
+		try{
+		stmt = conn.createStatement();
+		stmt.execute(sql.toString());
+		tag = "success";
+		}catch(Exception e){
+			tag = "error";
+		}
+		finally{
+			DBConnection.close(conn, stmt, rs);
+		}
+		return tag;
 	}
 }
-*/

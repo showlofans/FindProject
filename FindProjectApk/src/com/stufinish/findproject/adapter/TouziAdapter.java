@@ -1,14 +1,19 @@
 package com.stufinish.findproject.adapter;
 
 import java.util.ArrayList;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+
 import com.stufinish.findproject.R;
+import com.stufinish.findproject.adapter.ProjectAdapter.ViewHolder;
 import com.stufinish.findproject.model2.TouziBean;
 
 
@@ -16,9 +21,8 @@ public class TouziAdapter extends BaseAdapter{
 	private Context context;
 	private ArrayList<TouziBean>list;
 	private TouziBean touziBean;
-	private TextView tv_time,tv_project,tv_touzi;
 	private String str_projid,str_time;
-	private int touzi;
+	private int touzi,proj_id;
 	
 	public TouziAdapter(Context context, ArrayList<TouziBean> list) {
 		super();
@@ -32,7 +36,7 @@ public class TouziAdapter extends BaseAdapter{
 	}
 
 	@Override
-	public Object getItem(int position) {
+	public TouziBean getItem(int position) {
 		return (list != null && list.size() > position) ? list.get(position) : null;
 	}
 
@@ -45,19 +49,48 @@ public class TouziAdapter extends BaseAdapter{
 	@SuppressLint("ViewHolder")
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		LayoutInflater inflater = LayoutInflater.from(context);
-		convertView = inflater.inflate(R.layout.touzi_layout, null);
-		tv_project = (TextView)convertView.findViewById(R.id.tv_touzi_project);
-		tv_touzi = (TextView)convertView.findViewById(R.id.tv_touzi_count);
-		tv_time = (TextView)convertView.findViewById(R.id.tv_touzi_time);
+		final int pos = position;
+		ViewHolder viewHolder = null;
+		if (null == convertView) {
+			LayoutInflater inflater = LayoutInflater.from(context);
+			convertView = inflater.inflate(R.layout.item_touzi, null);
+			viewHolder = new ViewHolder();
+			viewHolder.tv_project = (TextView)convertView.findViewById(R.id.touziproj_tv);
+			viewHolder.tv_project.setOnClickListener(new OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+					
+				}
+			});
+			viewHolder.tv_touzi = (TextView)convertView.findViewById(R.id.touzi_tv);
+			viewHolder.tv_time = (TextView)convertView.findViewById(R.id.touzitime_tv);
+			convertView.setTag(viewHolder);
+		}else {
+			viewHolder = (ViewHolder) convertView.getTag();
+		}
 		touziBean = list.get(position);
-		str_projid = touziBean.getProj_id();
+		str_projid = touziBean.getProj_name();
 		str_time = touziBean.getTouzi_time();
 		touzi = touziBean.getTouzi_gets();
-		tv_project.setText(str_projid);
-		tv_time.setText(str_time);
-		tv_touzi.setText(touzi);
+		viewHolder.tv_project.setText(str_projid);
+		viewHolder.tv_project.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				proj_id = getItem(pos).getProj_id();
+			}
+		});
+		viewHolder.tv_time.setText(str_time);
+		viewHolder.tv_touzi.setText(touzi+"");
 		return convertView;
+	}
+	class ViewHolder {
+		//tv_time,tv_project,tv_touzi
+		TextView tv_touzi;
+		TextView tv_project;
+		TextView tv_time;
+		Button bt_cancel;
 	}
 
 }

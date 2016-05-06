@@ -2,7 +2,9 @@ package com.stufinish.findproject.activity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -17,6 +19,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -29,13 +32,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.stufinish.findproject.R;
-import com.stufinish.findproject.adapter.RenZhenAdapter;
 import com.stufinish.findproject.adapter.TouziAdapter;
-import com.stufinish.findproject.model2.RenZheng;
 import com.stufinish.findproject.model2.TouziBean;
 import com.stufinish.findproject.utils.Constant;
 
-public class TouZiActivity extends BaseActivity implements OnClickListener{
+public class TouZiActivity extends Activity implements OnClickListener{
 	
 	private ListView lv_touzi;
 	private String x;
@@ -45,7 +46,8 @@ public class TouZiActivity extends BaseActivity implements OnClickListener{
 	private ImageView img_back;
 	private TextView tv_touzi;
 	private SharedPreferences sp;
-	private String personName,person_resource,email;
+	private String url = Constant.touziUrl;
+	private String email = LoginActivity.loginBean.getE_mail();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,29 +55,31 @@ public class TouZiActivity extends BaseActivity implements OnClickListener{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.adapter_touzi);
 		initView();
-//		new Thread(new Runnable() {
-//			public void run() {
-//				Log.i("run(", "线程开始");
-//				x = send(Constant.touziUrl);// 调用send()获取返回的字符串。
-//				touziList = jxJSON(x);
-//				Message msg = handler.obtainMessage();
-//				handler.sendMessage(msg);
-//			}
-//		}).start();
-//		handler = new Handler() {
-//			@Override
-//			public void handleMessage(Message msg) {
-//				adapter = new TouziAdapter(TouZiActivity.this, touziList);
-//				lv_touzi.setAdapter(adapter);
-//				super.handleMessage(msg);
-//			}
-//		};
+		new Thread(new Runnable() {
+			public void run() {
+				Log.i("run(", "线程开始");
+				x = send(url);// 调用send()获取返回的字符串。
+				touziList = jxJSON(x);
+				Message msg = handler.obtainMessage();
+				handler.sendMessage(msg);
+			}
+		}).start();
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				adapter = new TouziAdapter(TouZiActivity.this, touziList);
+				lv_touzi.setAdapter(adapter);
+				super.handleMessage(msg);
+			}
+		};
 	}
 	
 	private void initView() {
 		img_back = (ImageView)findViewById(R.id.back_touzi);
 		lv_touzi = (ListView)findViewById(R.id.lv_project_touzi);
 		tv_touzi = (TextView) findViewById(R.id.tv_total_gets);
+		Map<String,String>params = new HashMap<String, String>();
+		params.put("email", email);
 		img_back.setOnClickListener(this);
 	}
 	@Override
@@ -93,9 +97,7 @@ public class TouZiActivity extends BaseActivity implements OnClickListener{
 		String str = null;
 		HttpClient httpclient = new DefaultHttpClient();
 		HttpPost request = new HttpPost(renzhenUrl);
-		sp = getSharedPreferences("loginconfig", MODE_PRIVATE);
-		email = sp.getString("loginPassword", "");
-		personName = sp.getString("loginName", "");
+		
 		NameValuePair loginpasvaluePair = new BasicNameValuePair("email",
 				email);
 		List<NameValuePair> parameters = new ArrayList<NameValuePair>();
@@ -142,9 +144,10 @@ public class TouZiActivity extends BaseActivity implements OnClickListener{
 				// private String renzhen_time; //添加认证时间
 				JSONObject obj = jsonarr.getJSONObject(i);
 				int touzi_gets = obj.getInt("touzi_gets");
-				String proj_id = obj.getString("proj_id");
+				int proj_id = obj.getInt("proj_id");
 				String touzi_time = obj.getString("touzi_time");
-				TouziBean touzi_info = new TouziBean(proj_id, touzi_gets, touzi_time);
+				String proj_name = obj.getString("proj_name");
+				TouziBean touzi_info = new TouziBean(proj_id, proj_name, touzi_gets, touzi_time);
 				list.add(touzi_info);
 			}
 			return list;

@@ -16,6 +16,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -49,23 +50,23 @@ import com.stufinish.findproject.utils.Constant;
 import com.stufinish.findproject.utils.InitPopWindow;
 import com.stufinish.findproject.utils.NetUtils;
 
-public class Service2 extends BaseActivity implements OnClickListener,
+public class Service2 extends Activity implements OnClickListener,
 		SwipeRefreshLayout.OnRefreshListener, OnScrollListener {
     private static int service2_count = 0;
 	public static final String TAG = "Service2";// 定义当前标签
-	public static SlidingMenu menu;
+	private SlidingMenu menu;
 	
 	private ListView lv;
 	private ProjectAdapter adapter;
 	private List<ProjectBean> list;
-	private List<HashMap<String, Object>> datalist = new ArrayList<HashMap<String, Object>>();
-	private boolean is_divPage;// 是否进行分页操作
-	private List<ProjectBean> oneTotal = new ArrayList<ProjectBean>();// 用来存放一页数据
+//	private List<HashMap<String, Object>> datalist = new ArrayList<HashMap<String, Object>>();
+//	private boolean is_divPage;// 是否进行分页操作
+//	private List<ProjectBean> oneTotal = new ArrayList<ProjectBean>();// 用来存放一页数据
 	private ProjectBean pbean;
 	private static int proj_d_count = -1;// 设置pageNo的初始化值为1，即默认获取的是第一页的数据。
 
 	// private PersonBean personBean;
-	private String x;
+//	private String x;
 	private SwipeRefreshLayout refreshableView;
 	private Handler handler;
 	private Button bt_home, bt_functiino;
@@ -74,7 +75,7 @@ public class Service2 extends BaseActivity implements OnClickListener,
 	private static String type = "项目";
 	public Thread thread1;
 	private String p; // 搜索得到的结果
-	private String projUrl = Constant.projectUrl;
+//	private String projUrl = Constant.projectUrl;
 	private Button bt_app_head, bt_web_head, bt_level_head, bt_all_head;
 	private View headView;
 	private InitPopWindow headWindow;
@@ -87,18 +88,14 @@ public class Service2 extends BaseActivity implements OnClickListener,
 	private static int index = 1;// 默认当前页
 	private String sizes = "5";// 每页的大小
 	private int num;// 数据总记录数
-	private String tag;
-
 	// private int MaxDataNum;
 	private int LastVisibleIndex = 0;// 可视最后索引
 	private Handler hd;
 	private PopupWindow popHead;
 
 	private SharedPreferences sp;
-	private Editor editor;
+//	private Editor editor;
 	private Button bt1,bt2,bt3,bt4,bt5,bt6,bt7;
-
-	// private MainApplication mainApp;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -106,14 +103,11 @@ public class Service2 extends BaseActivity implements OnClickListener,
 		setContentView(R.layout.item);
 
 		initView();
-		// mainApp = MainApplication.getInstance();
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// Toast.makeText(ProjectsService.this, "vdsf",
-				// Toast.LENGTH_LONG).show();
 				Intent detailIntent = new Intent(Service2.this,
 						ProjectDetailActivity.class);
 				detailIntent.putExtra("project", adapter.getItem(position));
@@ -126,28 +120,12 @@ public class Service2 extends BaseActivity implements OnClickListener,
 		});
 		if (NetUtils.isConnected(Service2.this)) {
 			refreshStart();
-			/*
-			 * new Thread(new Runnable() { public void run() { Log.i("run(",
-			 * "线程开始"); x =
-			 * MyHomeActivity.Serch(LoginActivity.loginBean.getE_mail(),
-			 * projUrl); list = jxJSON(x); Message msg =
-			 * handler.obtainMessage(); handler.sendMessage(msg); } }).start();
-			 */
 		}
-		
-//		new Thread(new Runnable() {
-//			public void run() {
-//				Log.i("run(", "线程开始");
-//				String re = httpGet(index, sizes, email,type);
-//				Message msg = handler.obtainMessage();
-//				msg.obj = re;
-//				handler.sendMessage(msg);
-//			}
-//		}).start();
 		list = new ArrayList<ProjectBean>();
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+				pbBar.setVisibility(View.GONE);
 				++index;
 				String tagMsg = msg.obj.toString();
 				Log.i("msg", tagMsg);
@@ -235,6 +213,7 @@ public class Service2 extends BaseActivity implements OnClickListener,
 	private void loadStart() {
 		sp = getSharedPreferences("page", MODE_PRIVATE);
 		sizes = sp.getInt("pageNum", 10) + "";
+		pbBar.setVisibility(View.VISIBLE);
 		new GoThread().start();
 	}
 
@@ -243,11 +222,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 	 */
 
 	private void initView() {
-
-		// if (mainApp.getPageNum() > 1) {
-		// sizes = mainApp.getPageNum() + "";
-		// }else{
-		// }
 		initMenu();
 		lv = (ListView) findViewById(R.id.lv_lv);// 找到listview
 		v_moreView = getLayoutInflater().inflate(R.layout.refresh_button, null);
@@ -283,15 +257,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 				sp_head_deploy.setText(type);
 				headWindow.closeWindow();
 				refreshStart();
-//				new Thread(new Runnable() {
-//					@Override
-//					public void run() {
-//						p = search(type);
-//						list = jxJSON(p);
-//						Message msg = handler.obtainMessage();
-//						handler.sendMessage(msg);
-//					}
-//				}).start();
 			}
 		});
 		bt_web_head.setOnClickListener(new OnClickListener() {
@@ -302,15 +267,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 				sp_head_deploy.setText(type);
 				headWindow.closeWindow();
 				refreshStart();
-//				new Thread(new Runnable() {
-//					@Override
-//					public void run() {
-//						p = search(type);
-//						list = jxJSON(p);
-//						Message msg = handler.obtainMessage();
-//						handler.sendMessage(msg);
-//					}
-//				}).start();
 			}
 		});
 		bt_level_head.setOnClickListener(new OnClickListener() {
@@ -321,15 +277,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 				sp_head_deploy.setText(type);
 				headWindow.closeWindow();
 				refreshStart();
-//				new Thread(new Runnable() {
-//					@Override
-//					public void run() {
-//						p = search(type);
-//						list = jxJSON(p);
-//						Message msg = handler.obtainMessage();
-//						handler.sendMessage(msg);
-//					}
-//				}).start();
 			}
 		});
 
@@ -366,7 +313,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 			bt6.setOnClickListener(this);
 			bt7.setOnClickListener(this);
 	}
-	private long mExitTime;
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
@@ -376,20 +322,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 				doAlert();
 				return false;
 			}
-			// if(menu.isMenuShowing() ||menu.isSecondaryMenuShowing()){
-			// menu.showContent();
-			// }else {
-			// if ((System.currentTimeMillis() - mExitTime) > 2000) {
-			// Toast.makeText(this, "�ٰ�һ���˳�",
-			// Toast.LENGTH_SHORT).show();
-			// mExitTime = System.currentTimeMillis();
-			// } else {
-			// // findApplication.setTab(tab);
-			//
-			// finish();
-			// }
-			// }
-			// return true;
 		}
 		// ����MENU��ť����¼����������κβ���
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
@@ -417,13 +349,8 @@ public class Service2 extends BaseActivity implements OnClickListener,
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-//						MainApplication application = MainApplication.getInstance();
-//						MainApplication.setTag(R.id.message_radio);
-						SharedPreferences sp = getSharedPreferences("tab", MODE_PRIVATE);
-						Editor editor = sp.edit();
-						editor.putInt("id", R.id.message_radio);
-						editor.commit();
-//						MainActivity.setId(R.id.message_radio);
+						MainApplication app = (MainApplication)getApplication();
+			    		app.setTag(R.id.message_radio);
 						Service2.this.finish();
 					}
 
@@ -466,36 +393,9 @@ public class Service2 extends BaseActivity implements OnClickListener,
 		switch (v.getId()) {
 		case R.id.bt_load:
 			loadStart();
-			// new MyTask().execute(projUrl + pageNo);
-//			new Thread(new Runnable() {
-//				public void run() {
-//					index = String.valueOf(Integer.parseInt(index) + 1);
-//					Log.i("run(", "线程开始");
-//					String re = httpGet(index, sizes, email, type);
-//					Message msg = handler.obtainMessage();
-//					msg.obj = re;
-//					handler.sendMessage(msg);
-//				}
-//			}).start();
-//			adapter.notifyDataSetChanged();
-			// pbBar.setVisibility(v.VISIBLE);
-			// bt_load_more.setVisibility(v.GONE);
-			//
-			// hd.postDelayed(new Runnable() {
-			//
-			// @Override
-			// public void run() {
-			// // loadMoreData();
-			// pbBar.setVisibility(View.VISIBLE);
-			// bt_load_more.setVisibility(View.GONE);
-			// bt_load_more.setVisibility(View.VISIBLE);
-			// adapter.notifyDataSetChanged();
-			// }
-			// }, 2000);
-
 			break;
 		case R.id.item_home:
-			super.showShortToast(bt_functiino.getText().toString());
+				menu.toggle();
 			break;
 		case R.id.bt_my_space:
 			View rightView = Service2.this.getLayoutInflater().inflate(
@@ -548,7 +448,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 			menu.toggle();
 			startActivity(new Intent(Service2.this,
 					MainSettingActivity.class));
-			// toastButtonText(bt5);
 			break;
 		case R.id.item6_description:
 			toastButtonText(bt6);
@@ -564,26 +463,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 		String str_toast = bt.getText().toString();
 		Toast.makeText(Service2.this, str_toast, Toast.LENGTH_SHORT).show();
 	}
-//	private String search(String strp) {
-//		String sss = null;
-//		String url = Constant.typeUrl;
-//		HttpClient httpclient = new DefaultHttpClient();
-//		HttpPost request = new HttpPost(url);
-//		try {
-//			List<NameValuePair> params = new ArrayList<NameValuePair>();
-//			params.add(new BasicNameValuePair("search", strp)); // 用户名
-//			request.setEntity(new UrlEncodedFormEntity(params, "utf-8")); // 设置编码方式
-//			HttpResponse response = httpclient.execute(request);
-//			if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-//				sss = EntityUtils.toString(response.getEntity()).trim(); // 获取返回的字符串
-//			} else {
-//				sss = null;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return sss;
-//	}
 /*
  * 如果b为真，表示下拉刷新，
  * 所以在加载数据前应该先清空
@@ -622,18 +501,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 					list.clear();}
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject obj = (JSONObject) array.opt(i);
-					// HashMap<String, Object>map = new HashMap<String,
-					// Object>();
-					// map.put("proj_id", obj.getInt("project_id"));
-					// map.put("proj_link",obj.getString("project_link"));
-					// map.put("proj_type",obj.getString("project_type"));
-					// map.put("proj_mind",obj.getString("project_mind"));
-					// map.put("proj_theme",obj.getString("project_theme"));
-					// map.put("proj_description",obj.getString("content_description"));
-					// map.put("proj_time",obj.getString("project_time"));
-					// map.put("proj_mail",obj.getString("person_email"));
-					// datalist.add(map);
-
 					int proj_id = obj.getInt("project_id");
 					String proj_link = obj.getString("project_link");
 					String proj_type = obj.getString("project_type");
@@ -643,13 +510,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 							.getString("content_description");
 					String proj_time = obj.getString("project_time");
 					String proj_mail = obj.getString("person_email");
-					// // String person_name = obj.getString("name");
-					// // String person_resource =
-					// obj.getString("project_resource");
-					// // personBean = new PersonBean(proj_mail, person_name);
-					// // pbean = new ProjectBean(proj_id, proj_link, proj_type,
-					// // proj_mind, proj_theme, proj_description, proj_time,
-					// // proj_mail, person_name);
 					pbean = new ProjectBean(proj_id, proj_link, proj_type,
 							proj_mind, proj_theme, proj_description, proj_time,
 							proj_mail);
@@ -664,40 +524,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 		}
 		return re;
 	}
-
-//	public List<ProjectBean> jxJSON(String result) {
-//		if (result == null) {
-//			return null;
-//		}
-//		try {
-//			JSONArray jsonarr = new JSONArray(result);
-//			for (int i = 0; i < jsonarr.length(); i++) {
-//				JSONObject obj = jsonarr.getJSONObject(i);
-//				int proj_id = obj.getInt("project_id");
-//				String proj_link = obj.getString("project_link");
-//				String proj_type = obj.getString("project_type");
-//				String proj_mind = obj.getString("project_mind");
-//				String proj_theme = obj.getString("project_theme");
-//				String proj_description = obj.getString("content_description");
-//				String proj_time = obj.getString("project_time");
-//				String proj_mail = obj.getString("person_email");
-//				// String person_name = obj.getString("name");
-//				// String person_resource = obj.getString("project_resource");
-//				// personBean = new PersonBean(proj_mail, person_name);
-//				// pbean = new ProjectBean(proj_id, proj_link, proj_type,
-//				// proj_mind, proj_theme, proj_description, proj_time,
-//				// proj_mail, person_name);
-//				pbean = new ProjectBean(proj_id, proj_link, proj_type,
-//						proj_mind, proj_theme, proj_description, proj_time,
-//						proj_mail);
-//				list.add(pbean);
-//			}
-//			return list;
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 
 	@Override
 	public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -715,16 +541,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 			} else {
 				loadStart();
 				Log.i("msg", "index=" + index);
-//				new Thread(new Runnable() {
-//					public void run() {
-//						Log.i("run(", "线程开始");
-//						String re = httpGet(index, sizes, email,type);
-//						Message msg = handler.obtainMessage();
-//						msg.obj = re;
-//						handler.sendMessage(msg);
-//					}
-//				}).start();
-				// adapter.notifyDataSetChanged();
 				Log.i("msg", "OnScrollStateChanged--lastVisibleIndex="
 						+ LastVisibleIndex);
 				Log.i("msg",
@@ -732,12 +548,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 								+ adapter.getCount());
 				Log.i("msg", "num=" + num);
 			}
-			// Toast.makeText(ProjectsService.this,
-			// "正在获取更多数据...",Toast.LENGTH_SHORT).show();
-			// pageNo++;
-			// new MyTask().execute(projUrl);
-			// new MyTask().execute(projUrl + pageNo);
-
 		}
 	}
 	class GoThread extends Thread{
@@ -779,31 +589,6 @@ public class Service2 extends BaseActivity implements OnClickListener,
 	@Override
 	public void onRefresh() {
 		refreshStart();
-//		new Thread(new Runnable() {
-//			public void run() {
-//				Log.i("run(", "线程开始");
-//				String re = httpGet(index, sizes, email,type);
-//				Message msg = handler.obtainMessage();
-//				msg.obj = re;
-//				handler.sendMessage(msg);
-//			}
-//		}).start();
-		// adapter.notifyDataSetChanged();
-		// new Thread(new Runnable() {
-		// @Override
-		// public void run() {
-		// if (type.equals("")) {
-		// p = MyHomeActivity.Serch(
-		// LoginActivity.loginBean.getE_mail(), projUrl);
-		// } else {
-		// p = search(type);
-		// }
-		// list = jxJSON(p);
-		// // refreshableView.setRefreshing(false);
-		// Message msg = hd.obtainMessage();
-		// hd.sendMessage(msg);
-		// }
-		// }).start();
 	}
 
 	private void refreshStart() {

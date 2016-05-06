@@ -8,24 +8,24 @@ public class MainApplication extends Application{
 	
 	private int pageNum=5;
 	private static MainApplication mInstance = null;
-	private static int tag=0;//标明退出的是哪个activity，初始化为第一个
-	public static MainApplication getInstance() {
-        
-        if(mInstance==null) {
-            mInstance = new MainApplication();
-        }
-        return mInstance;
-    }
+	private int tag;//标明退出的是哪个activity，初始化为第一个
+//	public static MainApplication getInstance() {
+//        
+//        if(mInstance==null) {
+//            mInstance = new MainApplication();
+//        }
+//        return mInstance;
+//    }
 	public MainApplication() {
 		super();
 	}
-	public void close(){//完全退出程序
-//		super.
-	}
+//	public void close(){//完全退出程序
+////		super.
+//	}
 	@Override
 	public void onCreate() {
-		// TODO Auto-generated method stub
 		super.onCreate();
+		setTag(R.id.message_radio);
 	}
 	public int getPageNum() {
 		return pageNum;
@@ -33,14 +33,11 @@ public class MainApplication extends Application{
 	public void setPageNum(int pageNum) {
 		this.pageNum = pageNum;
 	}
-	public static int getTag() {
-		if(tag==0){
-			return R.id.message_radio;
-		}
+	public int getTag() {
 		return tag;
 	}
-	public static void setTag(int tag) {
-		MainApplication.tag = tag;
+	public void setTag(int tag) {
+		this.tag = tag;
 	}
 	
 	

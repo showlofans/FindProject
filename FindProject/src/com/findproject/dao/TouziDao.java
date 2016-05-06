@@ -20,7 +20,7 @@ public class TouziDao {
 	public TouziDao() {
 		conn = db.getConn();
 	}
-	//»ñµÃ¸öÈËÍ¶×ÊÁÐ±í
+	//ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½Ð±ï¿½
 	public ArrayList<TouziBean> getList(String email) {
 		try {
 			list = new ArrayList<TouziBean>();
@@ -29,11 +29,11 @@ public class TouziDao {
 			pstm = conn.prepareStatement(sql_touzi);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				touziBean = new TouziBean(rs.getString("proj_id"), rs.getInt("touzi_gets"), 
+				touziBean = new TouziBean(rs.getInt("proj_id"), rs.getString("proj_theme"), rs.getInt("touzi_gets"), 
 						rs.getString("touzi_time"), rs.getString("email"));
 				list.add(touziBean);
-				return list;
 			}
+			return list;
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -42,7 +42,7 @@ public class TouziDao {
 		return null;
 	}
 
-	// ¸ù¾ÝÏîÄ¿id»ñµÃÍ¶×ÊÊý
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Ä¿idï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½
 	public int getTouzi(String proj_id) {
 		String sql_gets = "select touzi_gets from touzi where proj_id = '"
 				+ proj_id + "'";
@@ -61,19 +61,19 @@ public class TouziDao {
 		return 0;
 	}
 
-	// Í¶×Ê°´Å¥£¬¸üÐÂÍ¶×ÊÊý
-	public String updateTouzi(TouziBean touzi) {
-		String flag = "";
-		int touzi_gets = touzi.getTouzi_gets() + getTouzi(touzi.getProj_id());
-		String sql = "update touzi set touzi_gets='" + touzi_gets + "'";
-		try {
-			flag = db.execUpdate(sql);
-		} catch (Exception e) {
-			e.printStackTrace();
-			flag = "error1";
-		}
-		return flag;
-	}
+	// Í¶ï¿½Ê°ï¿½Å¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¶ï¿½ï¿½ï¿½ï¿½
+//	public String updateTouzi(TouziBean touzi) {
+//		String flag = "";
+//		int touzi_gets = touzi.getTouzi_gets() + getTouzi(touzi.getProj_id());
+//		String sql = "update touzi set touzi_gets='" + touzi_gets + "'";
+//		try {
+//			flag = db.execUpdate(sql);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			flag = "error1";
+//		}
+//		return flag;
+//	}
 
 	// String proj_id, int touzi_gets, String touzi_time,
 	// String email
@@ -84,11 +84,11 @@ public class TouziDao {
 				+ touzi.getTouzi_gets() + "'," + "'" + touzi.getTouzi_time()
 				+ "'," + "'" + touzi.getEmail() + "')";
 		try {
-			rt = db.execUpdate(sql_touzi); // ³É¹¦success£¬Ê§°Üerror
+			rt = db.execUpdate(sql_touzi); // ï¿½É¹ï¿½successï¿½ï¿½Ê§ï¿½ï¿½error
 		} catch (Exception e) {
 			e.printStackTrace();
 			rt = "error1";
 		}
-		return rt;// ³É¹¦success£¬Ê§°Üerror,´æÔÚexist
+		return rt;// ï¿½É¹ï¿½successï¿½ï¿½Ê§ï¿½ï¿½error,ï¿½ï¿½ï¿½ï¿½exist
 	}
 }

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/touziproj_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dip"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:text="投资的项目名"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/touzi_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="10dip"
+        android:layout_marginTop="10dip"
+        android:gravity="right"
+        android:text="投资金额"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/touzitime_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/touziproj_tv"
+        android:layout_marginLeft="10dip"
+        android:layout_marginTop="10dp"
+        android:text="投资时间"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/tzcancel_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/touzitime_tv"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="取消投资"
+        android:textSize="16sp" />
+
+</RelativeLayout>

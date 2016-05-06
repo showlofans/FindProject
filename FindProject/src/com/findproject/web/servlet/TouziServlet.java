@@ -38,6 +38,7 @@ public class TouziServlet extends HttpServlet {
 		String email = request.getParameter("email").toString().trim();
 		try{
 			PrintWriter out = response.getWriter();
+			log(email);
 			ArrayList<TouziBean> list_touzi = new ArrayList<TouziBean>();
 			TouziDao dao = new TouziDao();
 			list_touzi = dao.getList(email);
