@@ -8,6 +8,26 @@ public class TouziBean {
 	private String touzi_time;
 	private String email;
 	
+	
+	public TouziBean(int touzi_id, int proj_id, String proj_name,
+			int touzi_gets, String touzi_time) {
+		super();
+		this.touzi_id = touzi_id;
+		this.proj_id = proj_id;
+		this.proj_name = proj_name;
+		this.touzi_gets = touzi_gets;
+		this.touzi_time = touzi_time;
+	}
+	public TouziBean(int touzi_id, int proj_id, String proj_name,
+			int touzi_gets, String touzi_time, String email) {
+		super();
+		this.touzi_id = touzi_id;
+		this.proj_id = proj_id;
+		this.proj_name = proj_name;
+		this.touzi_gets = touzi_gets;
+		this.touzi_time = touzi_time;
+		this.email = email;
+	}
 	public TouziBean(int proj_id, String proj_name, int touzi_gets,
 			String touzi_time, String email) {
 		super();

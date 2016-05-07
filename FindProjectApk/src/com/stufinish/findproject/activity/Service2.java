@@ -433,21 +433,21 @@ public class Service2 extends Activity implements OnClickListener,
 			// startActivity(renzhenIntent);
 			break;
 		case R.id.item3_trouble:
-			menu.toggle();
 			toastButtonText(bt3);
 			startActivity(new Intent(Service2.this,
 					AddTroubleActivity.class));
-
+			menu.toggle();
 			break;
 		case R.id.item4_gets:
-			menu.toggle();
 			toastButtonText(bt4);
 			startActivity(new Intent(Service2.this, TouZiActivity.class));
+			menu.toggle();
 			break;
 		case R.id.item5_setting:
-			menu.toggle();
+			
 			startActivity(new Intent(Service2.this,
 					MainSettingActivity.class));
+			menu.toggle();
 			break;
 		case R.id.item6_description:
 			toastButtonText(bt6);

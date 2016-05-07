@@ -27,12 +27,15 @@ import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.Adapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.stufinish.findproject.R;
 import com.stufinish.findproject.adapter.TouziAdapter;
+import com.stufinish.findproject.model2.ProjectBean;
 import com.stufinish.findproject.model2.TouziBean;
 import com.stufinish.findproject.utils.Constant;
 
@@ -41,13 +44,14 @@ public class TouZiActivity extends Activity implements OnClickListener{
 	private ListView lv_touzi;
 	private String x;
 	private ArrayList<TouziBean> touziList;
-	private Handler handler;
+	private Handler handler,hd_dele;
 	private TouziAdapter adapter;
 	private ImageView img_back;
 	private TextView tv_touzi;
 	private SharedPreferences sp;
 	private String url = Constant.touziUrl;
 	private String email = LoginActivity.loginBean.getE_mail();
+	private TouziBean touzibean;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,11 +68,40 @@ public class TouZiActivity extends Activity implements OnClickListener{
 				handler.sendMessage(msg);
 			}
 		}).start();
+		hd_dele = new Handler(){
+			@Override
+			public void handleMessage(Message msg) {
+				String stres = msg.getData().getString("msg");
+				if(stres.equals("success")){
+					touzibean = adapter.getTouziBean();
+					touziList.remove(touzibean);
+					adapter = new TouziAdapter(TouZiActivity.this, touziList);
+					lv_touzi.setAdapter(adapter);
+					adapter.notifyDataSetChanged();
+					Toast.makeText(TouZiActivity.this, "删除成功",
+							Toast.LENGTH_SHORT).show();
+					
+				}else{
+					Toast.makeText(TouZiActivity.this, "删除失敗",
+							Toast.LENGTH_SHORT).show();
+				}
+				super.handleMessage(msg);
+			}
+		};
 		handler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {
+				String stres = msg.getData().getString("msg");
+//				if(stres.equals("success")){
 				adapter = new TouziAdapter(TouZiActivity.this, touziList);
+				//為刪除投資準數據
+				adapter.setHandler(hd_dele);
 				lv_touzi.setAdapter(adapter);
+//				}
+//				else{
+//					Toast.makeText(TouZiActivity.this, stres,
+//							Toast.LENGTH_SHORT).show();
+//				}
 				super.handleMessage(msg);
 			}
 		};
@@ -143,11 +176,13 @@ public class TouZiActivity extends Activity implements OnClickListener{
 				// private String renzhen_info; //认证信息
 				// private String renzhen_time; //添加认证时间
 				JSONObject obj = jsonarr.getJSONObject(i);
-				int touzi_gets = obj.getInt("touzi_gets");
+				
+				int touzi_id = obj.getInt("touzi_id");
 				int proj_id = obj.getInt("proj_id");
+				int touzi_gets = obj.getInt("touzi_gets");
 				String touzi_time = obj.getString("touzi_time");
 				String proj_name = obj.getString("proj_name");
-				TouziBean touzi_info = new TouziBean(proj_id, proj_name, touzi_gets, touzi_time);
+				TouziBean touzi_info = new TouziBean(touzi_id, proj_id, proj_name, touzi_gets, touzi_time);
 				list.add(touzi_info);
 			}
 			return list;

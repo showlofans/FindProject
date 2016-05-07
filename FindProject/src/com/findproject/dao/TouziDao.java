@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import com.findproject.DB.DB;
+import com.findproject.DB.DBConnection;
 import com.findproject.domain.TouziBean;
 
 public class TouziDao {
@@ -25,12 +26,12 @@ public class TouziDao {
 		try {
 			list = new ArrayList<TouziBean>();
 			String sql_touzi = "select * from touzi where email = '" + email
-					+ "'";
+					+ "' order by touzi_id desc";
 			pstm = conn.prepareStatement(sql_touzi);
 			rs = pstm.executeQuery();
 			while (rs.next()) {
-				touziBean = new TouziBean(rs.getInt("proj_id"), rs.getString("proj_theme"), rs.getInt("touzi_gets"), 
-						rs.getString("touzi_time"), rs.getString("email"));
+				touziBean = new TouziBean(rs.getInt("touzi_id"),rs.getInt("proj_id"), rs.getString("proj_theme"), rs.getInt("touzi_gets"), 
+						rs.getString("touzi_time"));
 				list.add(touziBean);
 			}
 			return list;
@@ -41,7 +42,6 @@ public class TouziDao {
 		}
 		return null;
 	}
-
 	// �����Ŀid���Ͷ����
 	public int getTouzi(String proj_id) {
 		String sql_gets = "select touzi_gets from touzi where proj_id = '"
@@ -79,8 +79,8 @@ public class TouziDao {
 	// String email
 	public String addTouzi(TouziBean touzi) {
 		String rt = "";
-		String sql_touzi = "insert into touzi(proj_id,touzi_gets,touzi_time,email)values(";
-		sql_touzi = sql_touzi + "'" + touzi.getProj_id() + "'," + "'"
+		String sql_touzi = "insert into touzi(proj_id,proj_theme,touzi_gets,touzi_time,email)values(";
+		sql_touzi = sql_touzi + "'" + touzi.getProj_id() + "'," + "'" + touzi.getProj_name() + "',"+"'"
 				+ touzi.getTouzi_gets() + "'," + "'" + touzi.getTouzi_time()
 				+ "'," + "'" + touzi.getEmail() + "')";
 		try {

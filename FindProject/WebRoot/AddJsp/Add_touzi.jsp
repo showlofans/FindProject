@@ -2,10 +2,11 @@
 <%@page contentType="text/html; charset=utf-8" import="com.findproject.dao.*,com.findproject.domain.*" language="java"%>
 <%	request.setCharacterEncoding("utf-8");
 	String e_mail = request.getParameter("email").trim();
-	int touzi_gets = Integer.parseInt(request.getParameter("touzi_gets").trim());
-	String proj_id = request.getParameter("proj_id").trim();
+	int touzi_gets = Integer.parseInt(request.getParameter("money").trim());
+	int proj_id = Integer.parseInt(request.getParameter("proj_id").trim());
+	String proj_theme = request.getParameter("proj_theme").trim();
 	String time = TimeUtil.getDate();
-	TouziBean touzi = new TouziBean(proj_id,touzi_gets,time,e_mail);
+	TouziBean touzi = new TouziBean(proj_id,proj_theme,touzi_gets,time,e_mail);
 	TouziDao dao = new TouziDao();
 	String str= dao.addTouzi(touzi);
 	if(str.equals("success")){
